@@ -25,6 +25,8 @@
         @keyframes tabIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
         @keyframes smokeY{0%{transform:translateY(0) scale(1);opacity:.25}50%{transform:translateY(-60px) scale(1.4);opacity:.08}100%{transform:translateY(-120px) scale(1.8);opacity:0}}
         @keyframes smokeG{0%{transform:translateY(0) scale(1);opacity:.2}50%{transform:translateY(-50px) scale(1.3);opacity:.06}100%{transform:translateY(-100px) scale(1.6);opacity:0}}
+        @keyframes rotateSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+        @keyframes pulseSoft{0%,100%{opacity:.4}50%{opacity:.8}}
         .au{opacity:0}.au.show{animation:fadeUp .7s ease forwards}
         .al{opacity:0}.al.show{animation:fadeLeft .7s ease forwards}
         .ar{opacity:0}.ar.show{animation:fadeRight .7s ease forwards}
@@ -65,6 +67,13 @@
         .flag-dza{color:#00A651}.flag-fra{color:#3B82F6}.flag-civ{color:#F97316}.flag-ago{color:#EF4444}.flag-gin{color:#A855F7}
         .ultra-big{position:relative;overflow:hidden}
         .ultra-big::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,214,0,.03),transparent 50%,rgba(0,166,81,.03));pointer-events:none}
+        /* Amazigh touches */
+        .tifinagh{font-family:monospace;letter-spacing:.15em}
+        .yaz-bg{position:absolute;pointer-events:none;opacity:.025;font-size:20rem;line-height:1}
+        .yaz-spin{animation:rotateSlow 60s linear infinite}
+        .amazigh-border{border-image:repeating-linear-gradient(90deg,#FFD600 0px,#FFD600 8px,transparent 8px,transparent 16px,#00A651 16px,#00A651 24px,transparent 24px,transparent 32px) 1}
+        .amazigh-pattern{background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFD600' fill-opacity='0.03'%3E%3Cpath d='M30 0L60 30L30 60L0 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+        .yaz-watermark{position:absolute;font-size:15rem;line-height:1;pointer-events:none;user-select:none}
         @media(max-width:1023px){.hero{min-height:calc(100vh - 76px)}}
     </style>
 </head>
@@ -103,8 +112,8 @@
 <!-- MARQUEE -->
 <div class="fixed top-16 lg:top-[68px] left-0 right-0 z-40 bg-jy py-1 overflow-hidden">
     <div class="marquee-t">
-        <span class="font-oswald font-bold text-[11px] tracking-[.18em] text-jb whitespace-nowrap px-6">⭐ JS KABYLIE — 7 COUPES D'AFRIQUE ⭐ 2 LIGUES DES CHAMPIONS (1981 · 1990) ⭐ 3 COUPES CAF (2000 · 2001 · 2002) ⭐ 1 COUPE DES COUPES (1995) ⭐ 1 SUPER COUPE (1982) ⭐ LE CANARI EST IMMORTEL ⭐ TIZI OUZOU ⭐&nbsp;</span>
-        <span class="font-oswald font-bold text-[11px] tracking-[.18em] text-jb whitespace-nowrap px-6">⭐ JS KABYLIE — 7 COUPES D'AFRIQUE ⭐ 2 LIGUES DES CHAMPIONS (1981 · 1990) ⭐ 3 COUPES CAF (2000 · 2001 · 2002) ⭐ 1 COUPE DES COUPES (1995) ⭐ 1 SUPER COUPE (1982) ⭐ LE CANARI EST IMMORTEL ⭐ TIZI OUZOU ⭐&nbsp;</span>
+        <span class="font-oswald font-bold text-[11px] tracking-[.18em] text-jb whitespace-nowrap px-6">⭐ JS KABYLIE — 7 COUPES D'AFRIQUE ⭐ 2 LIGUES DES CHAMPIONS (1981 · 1990) ⭐ 3 COUPES CAF (2000 · 2001 · 2002) ⭐ 1 COUPE DES COUPES (1995) ⭐ 1 SUPER COUPE (1982) ⭐ ⵣ LE CANARI EST IMMORTEL ⭐ TIZI OUZOU ⭐&nbsp;</span>
+        <span class="font-oswald font-bold text-[11px] tracking-[.18em] text-jb whitespace-nowrap px-6">⭐ JS KABYLIE — 7 COUPES D'AFRIQUE ⭐ 2 LIGUES DES CHAMPIONS (1981 · 1990) ⭐ 3 COUPES CAF (2000 · 2001 · 2002) ⭐ 1 COUPE DES COUPES (1995) ⭐ 1 SUPER COUPE (1982) ⭐ ⵣ LE CANARI EST IMMORTEL ⭐ TIZI OUZOU ⭐&nbsp;</span>
     </div>
 </div>
 
@@ -116,24 +125,41 @@
         <div class="smoke-y w-48 h-48" style="bottom:15%;left:8%;animation-delay:0s"></div>
         <div class="smoke-g w-40 h-40" style="bottom:10%;right:12%;animation-delay:2s"></div>
         <div class="smoke-y w-32 h-32" style="bottom:25%;left:35%;animation-delay:4s"></div>
+        <!-- Yaz watermark -->
+        <div class="yaz-watermark text-white/[.015] font-bold -top-10 right-5 hidden md:block" style="animation:rotateSlow 80s linear infinite">ⵣ</div>
+        <div class="yaz-watermark text-jy/[.03] font-bold -bottom-20 -left-10 hidden md:block" style="animation:rotateSlow 100s linear infinite reverse">ⵣ</div>
+
         <div class="relative z-10 text-center max-w-5xl mx-auto">
-            <div class="au flex justify-center mb-8">
+            <!-- Tifinagh subtitle -->
+            <div class="au flex justify-center mb-4">
+                <span class="tifinagh text-jg/30 text-lg md:text-xl tracking-[.3em]">ⵉⵍⵎⵥⵢⵏ ⵉⵏⴰⴷⴰⵍⵏ ⵏ ⵍⵇⴱⴰⵢⵍ</span>
+            </div>
+
+            <div class="au d1 flex justify-center mb-8">
                 <div class="emblem" style="animation:glow 3s ease infinite">
-                    <div class="text-center"><div class="font-bebas text-4xl text-jb leading-none tracking-wider">JSK</div><div class="text-[7px] text-jb/60 uppercase tracking-[.3em] font-semibold">1946</div></div>
+                    <div class="text-center">
+                        <div class="font-bebas text-4xl text-jb leading-none tracking-wider">JSK</div>
+                        <div class="text-[7px] text-jb/60 uppercase tracking-[.3em] font-semibold">1946</div>
+                    </div>
                 </div>
             </div>
-            <h1 class="au d1 font-bebas text-[clamp(3rem,11vw,9rem)] leading-[.88] tracking-wider uppercase mb-3">
+
+            <h1 class="au d2 font-bebas text-[clamp(3rem,11vw,9rem)] leading-[.88] tracking-wider uppercase mb-3">
                 <span class="text-white">JEUNESSE</span><br><span class="text-white">SPORTIVE DE</span><br><span class="bg-gradient-to-r from-jy via-yellow-300 to-jy bg-clip-text text-transparent glow-y">KABYLIE</span>
             </h1>
-            <p class="au d2 font-oswald text-lg md:text-xl text-jg/70 uppercase tracking-[.35em] mb-2">Le Canari Immortel</p>
-            <p class="au d3 text-sm text-gray-500 max-w-lg mx-auto mb-10 leading-relaxed">7 titres continentaux — Le club algérien le plus titré en Afrique. Une légende née dans les montagnes de Kabylie.</p>
-            <div class="au d4 flex flex-col sm:flex-row gap-3 justify-center mb-14">
+            <p class="au d3 font-oswald text-lg md:text-xl text-jg/70 uppercase tracking-[.35em] mb-1">Le Canari Immortel</p>
+            <!-- Amazigh tagline -->
+            <p class="au d3 tifinagh text-jy/25 text-sm mb-3 tracking-[.25em]" style="animation:pulseSoft 4s ease infinite">ⵣ ⴰⵢⴳ ⵏ ⵍⵇⴱⴰⵢⵍ ⵓⵔ ⵉⵎⵓⵔⵉⵖ ⵣ</p>
+            <p class="au d4 text-sm text-gray-500 max-w-lg mx-auto mb-10 leading-relaxed">7 titres continentaux — Le club algérien le plus titré en Afrique. Une légende née dans les montagnes de Kabylie.</p>
+
+            <div class="au d5 flex flex-col sm:flex-row gap-3 justify-center mb-14">
                 <button onclick="openTab('histoire')" class="group inline-flex items-center justify-center gap-2 bg-jy text-jb font-oswald font-bold uppercase tracking-[.12em] text-sm px-7 py-3.5 rounded-lg hover:bg-yellow-400 transition-all hover:shadow-[0_0_35px_rgba(255,214,0,.25)] cursor-pointer"><span class="iconify text-lg" data-icon="mdi:book-open-page-variant"></span> Histoire <span class="iconify text-lg group-hover:translate-x-1 transition-transform" data-icon="mdi:arrow-right"></span></button>
                 <button onclick="openTab('ultras')" class="group inline-flex items-center justify-center gap-2 border-2 border-jy text-jy font-oswald font-bold uppercase tracking-[.12em] text-sm px-7 py-3.5 rounded-lg hover:bg-jy hover:text-jb transition-all cursor-pointer"><span class="iconify text-lg" data-icon="mdi:account-group"></span> Ultras <span class="iconify text-lg group-hover:translate-x-1 transition-transform" data-icon="mdi:arrow-right"></span></button>
                 <button onclick="openTab('effectif')" class="inline-flex items-center justify-center gap-2 border-2 border-jg text-jg font-oswald font-bold uppercase tracking-[.12em] text-sm px-7 py-3.5 rounded-lg hover:bg-jg hover:text-white transition-all cursor-pointer"><span class="iconify text-lg" data-icon="mdi:tshirt-crew"></span> Effectif</button>
                 <button onclick="openTab('contact')" class="inline-flex items-center justify-center gap-2 border-2 border-white/15 text-gray-400 font-oswald font-bold uppercase tracking-[.12em] text-sm px-7 py-3.5 rounded-lg hover:bg-white/5 hover:text-white transition-all cursor-pointer"><span class="iconify text-lg" data-icon="mdi:message"></span> Contact</button>
             </div>
-            <div class="au d5 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto">
+
+            <div class="au d6 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto">
                 <div class="bg-white/[.025] border border-white/[.05] rounded-xl p-4"><div class="font-bebas text-4xl text-jy counter" data-target="7">0</div><div class="text-[9px] text-gray-600 uppercase tracking-[.2em] mt-0.5 font-semibold">Coupes d'Afrique</div></div>
                 <div class="bg-white/[.025] border border-white/[.05] rounded-xl p-4"><div class="font-bebas text-4xl text-jg counter" data-target="14">0</div><div class="text-[9px] text-gray-600 uppercase tracking-[.2em] mt-0.5 font-semibold">Championnats</div></div>
                 <div class="bg-white/[.025] border border-white/[.05] rounded-xl p-4"><div class="font-bebas text-4xl text-white counter" data-target="1946">0</div><div class="text-[9px] text-gray-600 uppercase tracking-[.2em] mt-0.5 font-semibold">Fondation</div></div>
@@ -149,12 +175,13 @@
     <div class="py-16 md:py-24 diag min-h-[calc(100vh-88px)]" style="background:radial-gradient(ellipse at 70% 80%,rgba(0,166,81,.05) 0%,transparent 40%),radial-gradient(ellipse at 20% 20%,rgba(255,214,0,.04) 0%,transparent 40%),#0B0B0B">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-6 au">
-                <div class="inline-flex items-center gap-2 mb-4"><span class="w-8 h-px bg-jy"></span><span class="text-[10px] font-bold text-jg uppercase tracking-[.3em]">Fondée le 2 août 1946</span><span class="w-8 h-px bg-jg"></span></div>
+                <div class="inline-flex items-center gap-2 mb-3"><span class="w-8 h-px bg-jy"></span><span class="text-[10px] font-bold text-jg uppercase tracking-[.3em]">Fondée le 2 août 1946</span><span class="w-8 h-px bg-jg"></span></div>
+                <p class="tifinagh text-jy/20 text-sm mb-3 tracking-[.3em]">ⵉⵍⵎⵥⵢⵏ ⵉⵏⴰⴷⴰⵍⵏ ⵏ ⵍⵇⴱⴰⵢⵍ</p>
                 <h2 class="font-bebas text-5xl md:text-6xl lg:text-7xl uppercase text-white leading-none">Histoire de la <span class="text-jy">JSK</span></h2>
             </div>
             <div class="au d1 mb-12">
                 <div class="bg-jcard border border-jborder rounded-2xl p-6 md:p-8">
-                    <p class="text-gray-300 text-sm leading-[1.9] mb-4">La <strong class="text-white">Jeunesse Sportive de Kabylie</strong> (en kabyle : <em class="text-jy">Ilemẓiyen inaddalen n leqbayel</em>, en tifinagh : <span class="text-jg" style="font-size:1.1em">ⵉⵍⵎⵥⵢⵏ ⵉⵏⴰⴷⴰⵍⵏ ⵏ ⵍⵇⴱⴰⵢⵍ</span>, en arabe : شبيبة القبائل), couramment abrégée <strong class="text-jy">JSK</strong>, est un club omnisports algérien, kabyle, fondé le <strong class="text-white">2 août 1946</strong> et basé à <strong class="text-white">Tizi-Ouzou</strong> en Kabylie, Algérie.</p>
+                    <p class="text-gray-300 text-sm leading-[1.9] mb-4">La <strong class="text-white">Jeunesse Sportive de Kabylie</strong> (en kabyle : <em class="text-jy">Ilemẓiyen inaddalen n leqbayel</em>, en tifinagh : <span class="tifinagh text-jg" style="font-size:1.1em">ⵉⵍⵎⵥⵢⵏ ⵉⵏⴰⴷⴰⵍⵏ ⵏ ⵍⵇⴱⴰⵢⵍ</span>, en arabe : شبيبة القبائل), couramment abrégée <strong class="text-jy">JSK</strong>, est un club omnisports algérien, kabyle, fondé le <strong class="text-white">2 août 1946</strong> et basé à <strong class="text-white">Tizi-Ouzou</strong> en Kabylie, Algérie.</p>
                     <p class="text-gray-400 text-sm leading-[1.9]">Considéré comme le plus grand club de football d'Algérie, la JSK a accumulé un palmarès parmi les plus étoffés du pays. Classée par la CAF parmi les dix meilleurs clubs africains du XXe siècle, sa popularité s'étend bien au-delà des frontières de Tizi-Ouzou. Son histoire et ses couleurs sont très présentes dans l'imaginaire populaire et le folklore kabyles, participant d'une symbolique transcendant le domaine sportif, souvent revendiquées comme un marqueur identitaire de la cause berbère.</p>
                 </div>
             </div>
@@ -172,105 +199,87 @@
 <!-- ==================== ULTRAS ==================== -->
 <section id="tab-ultras" class="tab-section">
     <div class="bg-ultras py-16 md:py-24 min-h-[calc(100vh-88px)] overflow-hidden">
-        <!-- Smoke effects -->
         <div class="smoke-y w-56 h-56" style="bottom:5%;left:3%;animation-delay:0s"></div>
         <div class="smoke-g w-44 h-44" style="top:10%;right:5%;animation-delay:1.5s"></div>
         <div class="smoke-y w-36 h-36" style="bottom:20%;right:20%;animation-delay:3s"></div>
         <div class="smoke-g w-28 h-28" style="top:30%;left:15%;animation-delay:4.5s"></div>
         <div class="smoke-y w-40 h-40" style="bottom:40%;left:50%;animation-delay:6s"></div>
+        <!-- Yaz watermarks -->
+        <div class="yaz-watermark text-jy/[.02] -top-5 right-10 hidden md:block" style="animation:rotateSlow 90s linear infinite">ⵣ</div>
+        <div class="yaz-watermark text-jg/[.02] bottom-10 left-5 hidden md:block" style="animation:rotateSlow 70s linear infinite reverse">ⵣ</div>
 
         <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Header -->
             <div class="text-center mb-14 au">
-                <div class="inline-flex items-center gap-2 mb-4"><span class="w-8 h-px bg-jy"></span><span class="text-[10px] font-bold text-jg uppercase tracking-[.3em]">La tribune sacrée</span><span class="w-8 h-px bg-jg"></span></div>
+                <div class="inline-flex items-center gap-2 mb-3"><span class="w-8 h-px bg-jy"></span><span class="text-[10px] font-bold text-jg uppercase tracking-[.3em]">La tribune sacrée</span><span class="w-8 h-px bg-jg"></span></div>
+                <p class="tifinagh text-jy/20 text-sm mb-3 tracking-[.3em]">ⴰⵔⵉⴱⴰ ⵏ ⵍⵇⴱⴰⵢⵍ</p>
                 <h2 class="font-bebas text-5xl md:text-6xl lg:text-7xl uppercase text-white leading-none mb-3">Les <span class="text-jy glow-y">Ultras</span> de la JSK</h2>
                 <p class="text-gray-500 text-sm max-w-lg mx-auto">Trois groupes, une seule passion. Les ultras font vibrer les tribunes du Stade de Tizi-Ouzou depuis 2009.</p>
-                <!-- Big JSK text background -->
-                <div class="font-bebas text-[12rem] md:text-[18rem] leading-none text-white/[.02] uppercase tracking-wider -mt-16 pointer-events-none select-none">JSK</div>
+                <div class="font-bebas text-[12rem] md:text-[18rem] leading-none text-white/[.02] uppercase tracking-wider -mt-16 pointer-events-none select-none">ⵣ</div>
             </div>
 
-            <!-- UKB -->
             <div class="mb-10 al">
                 <div class="ultra-big ucard bg-jcard rounded-2xl p-6 md:p-10">
                     <div class="relative z-10 flex flex-col md:flex-row gap-6">
                         <div class="shrink-0 flex md:flex-col items-center md:items-start gap-4">
-                            <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-jy/20 to-jy/5 border border-jy/20 flex items-center justify-center">
-                                <span class="iconify text-4xl text-jy" data-icon="mdi:shield-crown-outline"></span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="bg-jy text-jb font-bebas text-2xl px-4 py-1 rounded-lg">2009</span>
-                            </div>
+                            <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-jy/20 to-jy/5 border border-jy/20 flex items-center justify-center"><span class="iconify text-4xl text-jy" data-icon="mdi:shield-crown-outline"></span></div>
+                            <span class="bg-jy text-jb font-bebas text-2xl px-4 py-1 rounded-lg">2009</span>
                         </div>
                         <div>
                             <h3 class="font-bebas text-4xl md:text-5xl uppercase text-white tracking-wider leading-none mb-1">UKB</h3>
                             <p class="text-[12px] text-jy tracking-[.2em] uppercase font-bold mb-5">Ultras Kabylie Boys</p>
-                            <p class="text-gray-400 text-sm leading-[1.85] mb-5">Fondés en <strong class="text-white">2009</strong>, les <strong class="text-jy">Ultras Kabylie Boys</strong> sont le premier groupe ultras de la JSK. Pionniers du mouvement ultras dans les tribunes de Tizi-Ouzou, les UKB ont posé les bases de ce qui allait devenir une véritable culture. Avec leurs tifos spectaculaires, leurs chants puissants et leur organisation rigoureuse, les UKB ont ouvert la voie à une nouvelle génération de supporters kabyles. Ils sont la référence, les pères fondateurs de l'ultrisme à Tizi-Ouzou.</p>
+                            <p class="text-gray-400 text-sm leading-[1.85] mb-5">Fondés en <strong class="text-white">2009</strong>, les <strong class="text-jy">Ultras Kabylie Boys</strong> sont le premier groupe ultras de la JSK. Pionniers du mouvement ultras dans les tribunes de Tizi-Ouzou, les UKB ont posé les bases de ce qui allait devenir une véritable culture. Avec leurs tifos spectaculaires, leurs chants puissants et leur organisation rigoureuse, les UKB ont ouvert la voie à une nouvelle génération de supporters kabyles.</p>
                             <div class="flex flex-wrap gap-2">
                                 <span class="text-[9px] font-bold bg-jy/10 text-jy px-3 py-1.5 rounded-full border border-jy/15 uppercase tracking-wider">Pionniers</span>
                                 <span class="text-[9px] font-bold bg-white/[.03] text-gray-400 px-3 py-1.5 rounded-full border border-white/[.06] uppercase tracking-wider">Tifos</span>
                                 <span class="text-[9px] font-bold bg-white/[.03] text-gray-400 px-3 py-1.5 rounded-full border border-white/[.06] uppercase tracking-wider">Chants</span>
-                                <span class="text-[9px] font-bold bg-white/[.03] text-gray-400 px-3 py-1.5 rounded-full border border-white/[.06] uppercase tracking-wider">Tribune Honor</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- USB -->
             <div class="mb-10 ar">
                 <div class="ultra-big ucard bg-jcard rounded-2xl p-6 md:p-10">
                     <div class="relative z-10 flex flex-col md:flex-row gap-6">
                         <div class="shrink-0 flex md:flex-col items-center md:items-start gap-4">
-                            <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-jg/20 to-jg/5 border border-jg/20 flex items-center justify-center">
-                                <span class="iconify text-4xl text-jg" data-icon="mdi:music-clef-treble"></span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="bg-jg text-white font-bebas text-2xl px-4 py-1 rounded-lg">2011</span>
-                            </div>
+                            <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-jg/20 to-jg/5 border border-jg/20 flex items-center justify-center"><span class="iconify text-4xl text-jg" data-icon="mdi:music-clef-treble"></span></div>
+                            <span class="bg-jg text-white font-bebas text-2xl px-4 py-1 rounded-lg">2011</span>
                         </div>
                         <div>
                             <h3 class="font-bebas text-4xl md:text-5xl uppercase text-white tracking-wider leading-none mb-1">USB</h3>
                             <p class="text-[12px] text-jg tracking-[.2em] uppercase font-bold mb-5">Ultras Samba Boys</p>
-                            <p class="text-gray-400 text-sm leading-[1.85] mb-5">Nés en <strong class="text-white">2011</strong>, les <strong class="text-jg">Ultras Samba Boys</strong> ont apporté une énergie festive et colorée aux tribunes. Inspirés par la samba brésilienne, les USB se distinguent par leurs rythmes entraînants, leurs instruments de percussion et une ambiance chaleureuse qui fait vibrer tout le stade. Le groupe a su créer une identité unique, mélangeant la ferveur kabyle avec des influences musicales venues d'ailleurs. La fête, avant tout.</p>
+                            <p class="text-gray-400 text-sm leading-[1.85] mb-5">Nés en <strong class="text-white">2011</strong>, les <strong class="text-jg">Ultras Samba Boys</strong> ont apporté une énergie festive et colorée aux tribunes. Inspirés par la samba brésilienne, les USB se distinguent par leurs rythmes entraînants, leurs instruments de percussion et une ambiance chaleureuse qui fait vibrer tout le stade.</p>
                             <div class="flex flex-wrap gap-2">
                                 <span class="text-[9px] font-bold bg-jg/10 text-jg px-3 py-1.5 rounded-full border border-jg/15 uppercase tracking-wider">Festifs</span>
                                 <span class="text-[9px] font-bold bg-white/[.03] text-gray-400 px-3 py-1.5 rounded-full border border-white/[.06] uppercase tracking-wider">Percussion</span>
                                 <span class="text-[9px] font-bold bg-white/[.03] text-gray-400 px-3 py-1.5 rounded-full border border-white/[.06] uppercase tracking-wider">Samba</span>
-                                <span class="text-[9px] font-bold bg-white/[.03] text-gray-400 px-3 py-1.5 rounded-full border border-white/[.06] uppercase tracking-wider">Ambiance</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- UL -->
             <div class="mb-12 al">
                 <div class="ultra-big ucard bg-jcard rounded-2xl p-6 md:p-10">
                     <div class="relative z-10 flex flex-col md:flex-row gap-6">
                         <div class="shrink-0 flex md:flex-col items-center md:items-start gap-4">
-                            <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-jy/15 to-jg/15 border border-jy/10 flex items-center justify-center">
-                                <span class="iconify text-4xl text-jy" data-icon="mdi:crown"></span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="bg-gradient-to-r from-jy to-jg text-jb font-bebas text-2xl px-4 py-1 rounded-lg">2013</span>
-                            </div>
+                            <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-jy/15 to-jg/15 border border-jy/10 flex items-center justify-center"><span class="iconify text-4xl text-jy" data-icon="mdi:crown"></span></div>
+                            <span class="bg-gradient-to-r from-jy to-jg text-jb font-bebas text-2xl px-4 py-1 rounded-lg">2013</span>
                         </div>
                         <div>
                             <h3 class="font-bebas text-4xl md:text-5xl uppercase text-white tracking-wider leading-none mb-1">UL</h3>
                             <p class="text-[12px] text-jy tracking-[.2em] uppercase font-bold mb-5">Ultras The Leader</p>
-                            <p class="text-gray-400 text-sm leading-[1.85] mb-5">Créés en <strong class="text-white">2013</strong>, les <strong class="text-jy">Ultras The Leader</strong> incarnent la nouvelle génération du mouvement ultras kabyle. Leur nom dit tout : l'ambition de mener, de guider la tribune vers toujours plus haut. Les UL se démarquent par des tifos gigantesques, une présence massive dans les déplacements et une détermination sans faille. Ils représentent le renouveau du soutien inconditionnel au Canari.</p>
+                            <p class="text-gray-400 text-sm leading-[1.85] mb-5">Créés en <strong class="text-white">2013</strong>, les <strong class="text-jy">Ultras The Leader</strong> incarnent la nouvelle génération du mouvement ultras kabyle. Leur nom dit tout : l'ambition de mener, de guider la tribune vers toujours plus haut. Tifos gigantesques, présence massive dans les déplacements et détermination sans faille.</p>
                             <div class="flex flex-wrap gap-2">
                                 <span class="text-[9px] font-bold bg-jy/10 text-jy px-3 py-1.5 rounded-full border border-jy/15 uppercase tracking-wider">Leaders</span>
                                 <span class="text-[9px] font-bold bg-white/[.03] text-gray-400 px-3 py-1.5 rounded-full border border-white/[.06] uppercase tracking-wider">Tifos Géants</span>
                                 <span class="text-[9px] font-bold bg-white/[.03] text-gray-400 px-3 py-1.5 rounded-full border border-white/[.06] uppercase tracking-wider">Déplacements</span>
-                                <span class="text-[9px] font-bold bg-white/[.03] text-gray-400 px-3 py-1.5 rounded-full border border-white/[.06] uppercase tracking-wider">Nouvelle Génération</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Timeline -->
             <div class="au flex items-center justify-center gap-0 max-w-md mx-auto mb-16">
                 <div class="flex flex-col items-center"><div class="w-14 h-14 rounded-full bg-jy flex items-center justify-center font-bebas text-xl text-jb shadow-[0_0_20px_rgba(255,214,0,.3)]">09</div><div class="text-[10px] text-jy font-bold mt-2 uppercase tracking-wider">UKB</div></div>
                 <div class="flex-1 h-0.5 bg-gradient-to-r from-jy to-jg mx-3"></div>
@@ -279,12 +288,15 @@
                 <div class="flex flex-col items-center"><div class="w-14 h-14 rounded-full bg-gradient-to-br from-jy to-jg flex items-center justify-center font-bebas text-xl text-jb shadow-[0_0_20px_rgba(255,214,0,.25)]">13</div><div class="text-[10px] text-jy font-bold mt-2 uppercase tracking-wider">UL</div></div>
             </div>
 
-            <!-- Quote -->
+            <!-- Amazigh quote -->
             <div class="au d2 bg-gradient-to-r from-jgd/20 via-jg/10 to-jgd/20 border border-jg/15 rounded-2xl p-6 md:p-8 text-center relative overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-br from-jy/[.03] to-transparent pointer-events-none"></div>
+                <div class="absolute top-3 left-4 tifinagh text-jy/10 text-3xl">ⵣ</div>
+                <div class="absolute bottom-3 right-4 tifinagh text-jg/10 text-3xl">ⵣ</div>
                 <div class="relative z-10">
                     <span class="iconify text-3xl text-jy/30 mb-2 inline-block" data-icon="mdi:format-quote-open"></span>
-                    <p class="font-playfair text-lg md:text-xl text-gray-200 italic leading-relaxed max-w-xl mx-auto mb-3">Les couleurs jaune et vert ne sont pas que des couleurs de maillot. C'est notre identité, notre fierté, notre combat.</p>
+                    <p class="text-lg md:text-xl text-gray-200 italic leading-relaxed max-w-xl mx-auto mb-2" style="font-family:'Playfair Display',serif">Les couleurs jaune et vert ne sont pas que des couleurs de maillot. C'est notre identité, notre fierté, notre combat.</p>
+                    <p class="tifinagh text-jy/30 text-sm tracking-[.3em] mb-1">ⴰⵢⴳ ⵏ ⵍⵇⴱⴰⵢⵍ ⵓⵔ ⵉⵎⵓⵔⵉⵖ</p>
                     <p class="text-[11px] text-jy uppercase tracking-[.2em] font-semibold">— Les Ultras de la JSK</p>
                 </div>
             </div>
@@ -297,7 +309,8 @@
     <div class="py-16 md:py-24 min-h-[calc(100vh-88px)]" style="background:radial-gradient(ellipse at 80% 90%,rgba(0,166,81,.06) 0%,transparent 35%),radial-gradient(ellipse at 15% 15%,rgba(255,214,0,.04) 0%,transparent 35%),#0B0B0B">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 au">
-                <div class="inline-flex items-center gap-2 mb-4"><span class="w-8 h-px bg-jg"></span><span class="text-[10px] font-bold text-jy uppercase tracking-[.3em]">Saison 2024-2025</span><span class="w-8 h-px bg-jy"></span></div>
+                <div class="inline-flex items-center gap-2 mb-3"><span class="w-8 h-px bg-jg"></span><span class="text-[10px] font-bold text-jy uppercase tracking-[.3em]">Saison 2024-2025</span><span class="w-8 h-px bg-jy"></span></div>
+                <p class="tifinagh text-jy/20 text-sm mb-3 tracking-[.3em]">ⵜⴰⵎⵎⴰⵜ</p>
                 <h2 class="font-bebas text-5xl md:text-6xl lg:text-7xl uppercase text-white leading-none">L'<span class="text-jy">Effectif</span></h2>
                 <p class="text-gray-600 text-xs mt-3">35 joueurs — Gardiens · Défenseurs · Milieux · Attaquants</p>
             </div>
@@ -363,26 +376,28 @@
 <!-- ==================== CONTACT ==================== -->
 <section id="tab-contact" class="tab-section">
     <div class="py-16 md:py-24 min-h-[calc(100vh-88px)] flex items-center" style="background:radial-gradient(ellipse at 50% 50%,rgba(255,214,0,.05) 0%,transparent 50%),radial-gradient(ellipse at 30% 70%,rgba(0,166,81,.06) 0%,transparent 40%),#0B0B0B">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div class="text-center mb-12 au">
-                <div class="inline-flex items-center gap-2 mb-4"><span class="w-8 h-px bg-jy"></span><span class="text-[10px] font-bold text-jg uppercase tracking-[.3em]">Restons en contact</span><span class="w-8 h-px bg-jy"></span></div>
+        <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
+            <div class="mb-10 au">
+                <div class="inline-flex items-center gap-2 mb-3"><span class="w-8 h-px bg-jy"></span><span class="text-[10px] font-bold text-jg uppercase tracking-[.3em]">Restons en contact</span><span class="w-8 h-px bg-jy"></span></div>
+                <p class="tifinagh text-jy/20 text-sm mb-3 tracking-[.3em]">ⴰⵏⵏⵏⵓⵇ</p>
                 <h2 class="font-bebas text-5xl md:text-6xl lg:text-7xl uppercase text-white leading-none">Contact</h2>
             </div>
-            <div class="grid md:grid-cols-2 gap-5 max-w-xl mx-auto mb-8">
-                <a href="tel:0558074686" class="au ucard bg-jcard rounded-2xl p-7 text-center block group"><div class="w-14 h-14 mx-auto mb-4 rounded-full bg-jg/10 border border-jg/15 flex items-center justify-center group-hover:bg-jg/20 transition-colors"><span class="iconify text-2xl text-jg" data-icon="mdi:phone"></span></div><h3 class="font-oswald font-bold text-base uppercase text-white mb-1">Téléphone</h3><p class="text-jy text-xl font-bebas tracking-wider">0558 07 46 86</p><p class="text-[9px] text-gray-600 mt-2 uppercase tracking-wider">Clique pour appeler</p></a>
-                <a href="https://instagram.com/ad4n.46" target="_blank" class="au d1 ucard bg-jcard rounded-2xl p-7 text-center block group"><div class="w-14 h-14 mx-auto mb-4 rounded-full bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-pink-500/15 flex items-center justify-center group-hover:from-purple-500/20 group-hover:to-pink-500/20 transition-colors"><span class="iconify text-2xl text-pink-400" data-icon="mdi:instagram"></span></div><h3 class="font-oswald font-bold text-base uppercase text-white mb-1">Instagram</h3><p class="text-pink-400 text-xl font-bebas tracking-wider">@ad4n.46</p><p class="text-[9px] text-gray-600 mt-2 uppercase tracking-wider">Suis-nous sur Insta</p></a>
+            <div class="au d1 ucard bg-jcard rounded-2xl p-8 md:p-10 block mb-6">
+                <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-pink-500/15 flex items-center justify-center"><span class="iconify text-3xl text-pink-400" data-icon="mdi:instagram"></span></div>
+                <h3 class="font-oswald font-bold text-lg uppercase text-white mb-2">Instagram</h3>
+                <a href="https://instagram.com/ryx.46" target="_blank" class="text-pink-400 text-2xl font-bebas tracking-wider hover:text-pink-300 transition-colors">@ryx.46</a>
+                <p class="text-[10px] text-gray-600 mt-3 uppercase tracking-wider">Suis-nous sur Instagram</p>
+                <a href="https://instagram.com/ryx.46" target="_blank" class="inline-flex items-center justify-center gap-2 border-2 border-pink-500/30 text-pink-400 font-oswald font-bold uppercase tracking-[.12em] text-sm px-6 py-3 rounded-lg hover:bg-pink-500/10 hover:border-pink-500/50 transition-all mt-5"><span class="iconify" data-icon="mdi:instagram"></span> Suivre @ryx.46</a>
             </div>
-            <div class="au d2 max-w-xl mx-auto bg-gradient-to-br from-jy to-yellow-400 rounded-2xl p-7 md:p-9 text-center relative overflow-hidden">
+            <div class="au d2 bg-gradient-to-br from-jy to-yellow-400 rounded-2xl p-7 md:p-9 text-center relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
                 <div class="absolute bottom-0 left-0 w-20 h-20 bg-black/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+                <div class="absolute top-3 left-4 tifinagh text-jb/15 text-2xl">ⵣ</div>
                 <div class="relative z-10">
                     <span class="iconify text-3xl text-jb/20 mb-2 inline-block" data-icon="mdi:soccer"></span>
                     <h3 class="font-bebas text-3xl uppercase text-jb tracking-wider mb-1">Envie de parler JSK ?</h3>
-                    <p class="text-jb/55 text-xs max-w-sm mx-auto mb-5">Contacte-moi par téléphone ou sur Instagram pour parler du Canari et des ultras.</p>
-                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                        <a href="tel:0558074686" class="inline-flex items-center justify-center gap-2 bg-jb text-jy font-oswald font-bold uppercase tracking-[.12em] text-sm px-6 py-3 rounded-lg hover:bg-gray-900 transition-colors"><span class="iconify" data-icon="mdi:phone"></span> Appeler</a>
-                        <a href="https://instagram.com/ad4n.46" target="_blank" class="inline-flex items-center justify-center gap-2 border-2 border-jb text-jb font-oswald font-bold uppercase tracking-[.12em] text-sm px-6 py-3 rounded-lg hover:bg-jb hover:text-white transition-colors"><span class="iconify" data-icon="mdi:instagram"></span> Instagram</a>
-                    </div>
+                    <p class="text-jb/55 text-xs max-w-sm mx-auto mb-5">Suis-nous sur Instagram pour tout savoir sur le Canari et les ultras.</p>
+                    <a href="https://instagram.com/ryx.46" target="_blank" class="inline-flex items-center justify-center gap-2 bg-jb text-jy font-oswald font-bold uppercase tracking-[.12em] text-sm px-6 py-3 rounded-lg hover:bg-gray-900 transition-colors"><span class="iconify" data-icon="mdi:instagram"></span> Instagram</a>
                 </div>
             </div>
         </div>
@@ -428,7 +443,10 @@
             </div>
         </div>
         <div class="border-t border-white/[.03] pt-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-            <p class="text-[10px] text-gray-700 text-center sm:text-left">© 2025 JS Kabylie — Site non officiel</p>
+            <div class="flex items-center gap-2">
+                <span class="tifinagh text-jy/30 text-sm">ⵣ</span>
+                <p class="text-[10px] text-gray-700 text-center sm:text-left">© 2025 JS Kabylie — Site non officiel</p>
+            </div>
             <p class="text-[11px] text-gray-500 flex items-center gap-1.5">Créé par <span class="text-jy font-semibold">Adan Madour</span><span class="iconify text-jg text-sm" data-icon="mdi:heart"></span></p>
         </div>
     </div>
@@ -461,7 +479,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.querySelectorAll('#tab-accueil .au,#tab-accueil .al,#tab-accueil .ar').forEach(el=>obs.observe(el));
     const cObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.querySelectorAll('.counter').forEach(c=>{const t=+c.dataset.target,s=performance.now();(function u(n){const p=Math.min((n-s)/2000,1),ea=1-Math.pow(1-p,3);c.textContent=Math.round(ea*t);if(p<1)requestAnimationFrame(u)})(s)});cObs.unobserve(x.target)}})},{threshold:.4});
     const st=document.querySelector('.counter');if(st)cObs.observe(st.closest('.grid'));
-    setTimeout(()=>{const t=document.getElementById('toast');document.getElementById('toastMsg').textContent='⭐ Bienvenue dans la maison du Canari !';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)},1500);
+    setTimeout(()=>{const t=document.getElementById('toast');document.getElementById('toastMsg').textContent='ⵣ Bienvenue dans la maison du Canari !';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)},1500);
 });
 </script>
 </body>
