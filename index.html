@@ -27,10 +27,11 @@
         @keyframes smokeG{0%{transform:translateY(0) scale(1);opacity:.2}50%{transform:translateY(-50px) scale(1.3);opacity:.06}100%{transform:translateY(-100px) scale(1.6);opacity:0}}
         @keyframes rotateSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
         @keyframes pulseSoft{0%,100%{opacity:.4}50%{opacity:.8}}
+        @keyframes vsGlow{0%,100%{text-shadow:0 0 10px rgba(255,214,0,.3)}50%{text-shadow:0 0 25px rgba(255,214,0,.6),0 0 50px rgba(0,166,81,.2)}}
         .au{opacity:0}.au.show{animation:fadeUp .7s ease forwards}
         .al{opacity:0}.al.show{animation:fadeLeft .7s ease forwards}
         .ar{opacity:0}.ar.show{animation:fadeRight .7s ease forwards}
-        .d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}.d5{animation-delay:.5s}.d6{animation-delay:.6s}
+        .d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}.d5{animation-delay:.5s}.d6{animation-delay:.6s}.d7{animation-delay:.7s}
         .marquee-t{display:flex;animation:marquee 22s linear infinite;width:max-content}
         .hero{position:relative;min-height:calc(100vh - 88px);background:radial-gradient(ellipse at 10% 90%,rgba(255,214,0,.1) 0%,transparent 45%),radial-gradient(ellipse at 90% 10%,rgba(0,166,81,.12) 0%,transparent 45%),radial-gradient(ellipse at 50% 50%,rgba(255,214,0,.04) 0%,transparent 60%),radial-gradient(ellipse at 30% 30%,rgba(0,166,81,.05) 0%,transparent 50%),#0B0B0B}
         .hero::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(255,214,0,.008) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(0,166,81,.008) 60px)}
@@ -64,16 +65,20 @@
         .tab-section{display:none;animation:tabIn .4s ease forwards}
         .tab-section.active{display:block}
         .flag{font-size:9px;letter-spacing:.5px;font-weight:600;padding:1px 5px;border-radius:3px;background:rgba(255,255,255,.05)}
-        .flag-dza{color:#00A651}.flag-fra{color:#3B82F6}.flag-civ{color:#F97316}.flag-ago{color:#EF4444}.flag-gin{color:#A855F7}
+        .flag-dza{color:#00A651}.flag-fra{color:#3B82F6}.flag-civ{color:#F97316}.flag-ago{color:#EF4444}.flag-sen{color:#EAB308}.flag-tcd{color:#60A5FA}.flag-che{color:#EF4444}
         .ultra-big{position:relative;overflow:hidden}
         .ultra-big::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,214,0,.03),transparent 50%,rgba(0,166,81,.03));pointer-events:none}
-        /* Amazigh touches */
         .tifinagh{font-family:monospace;letter-spacing:.15em}
-        .yaz-bg{position:absolute;pointer-events:none;opacity:.025;font-size:20rem;line-height:1}
-        .yaz-spin{animation:rotateSlow 60s linear infinite}
-        .amazigh-border{border-image:repeating-linear-gradient(90deg,#FFD600 0px,#FFD600 8px,transparent 8px,transparent 16px,#00A651 16px,#00A651 24px,transparent 24px,transparent 32px) 1}
-        .amazigh-pattern{background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFD600' fill-opacity='0.03'%3E%3Cpath d='M30 0L60 30L30 60L0 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
         .yaz-watermark{position:absolute;font-size:15rem;line-height:1;pointer-events:none;user-select:none}
+        .match-card{position:relative;overflow:hidden;transition:all .4s cubic-bezier(.23,1,.32,1);border:1px solid #1e1e1e}
+        .match-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(255,214,0,.06)}
+        .match-card.home-match:hover{border-color:rgba(255,214,0,.25)}
+        .match-card.away-match:hover{border-color:rgba(0,166,81,.2)}
+        .match-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transition:opacity .4s;opacity:0}
+        .match-card.home-match::before{background:linear-gradient(90deg,#FFD600,#00A651)}
+        .match-card.away-match::before{background:linear-gradient(90deg,#00A651,#FFD600)}
+        .match-card:hover::before{opacity:1}
+        .vs-badge{animation:vsGlow 3s ease infinite}
         @media(max-width:1023px){.hero{min-height:calc(100vh - 76px)}}
     </style>
 </head>
@@ -90,11 +95,12 @@
                     <div class="text-[8px] tracking-[.25em] text-jy uppercase font-medium">1946 · Tizi Ouzou</div>
                 </div>
             </div>
-            <div class="hidden lg:flex items-center gap-8">
+            <div class="hidden lg:flex items-center gap-7">
                 <span onclick="openTab('accueil')" class="nav-item active text-[11px] font-semibold uppercase tracking-[.15em] text-gray-400" data-tab="accueil">Accueil</span>
                 <span onclick="openTab('histoire')" class="nav-item text-[11px] font-semibold uppercase tracking-[.15em] text-gray-400" data-tab="histoire">Histoire</span>
                 <span onclick="openTab('ultras')" class="nav-item text-[11px] font-semibold uppercase tracking-[.15em] text-gray-400" data-tab="ultras">Ultras</span>
                 <span onclick="openTab('effectif')" class="nav-item text-[11px] font-semibold uppercase tracking-[.15em] text-gray-400" data-tab="effectif">Effectif</span>
+                <span onclick="openTab('calendrier')" class="nav-item text-[11px] font-semibold uppercase tracking-[.15em] text-gray-400" data-tab="calendrier">Calendrier</span>
                 <span onclick="openTab('contact')" class="nav-item text-[11px] font-semibold uppercase tracking-[.15em] text-gray-400" data-tab="contact">Contact</span>
             </div>
             <button id="mobBtn" onclick="toggleMob()" class="lg:hidden text-white p-1"><span class="iconify text-2xl" data-icon="mdi:menu"></span></button>
@@ -105,6 +111,7 @@
         <span onclick="openTab('histoire');toggleMob()" class="block py-3 font-oswald text-lg uppercase tracking-wider text-gray-300 hover:text-jy border-b border-white/5 cursor-pointer">Histoire</span>
         <span onclick="openTab('ultras');toggleMob()" class="block py-3 font-oswald text-lg uppercase tracking-wider text-gray-300 hover:text-jy border-b border-white/5 cursor-pointer">Ultras</span>
         <span onclick="openTab('effectif');toggleMob()" class="block py-3 font-oswald text-lg uppercase tracking-wider text-gray-300 hover:text-jy border-b border-white/5 cursor-pointer">Effectif</span>
+        <span onclick="openTab('calendrier');toggleMob()" class="block py-3 font-oswald text-lg uppercase tracking-wider text-gray-300 hover:text-jy border-b border-white/5 cursor-pointer">Calendrier</span>
         <span onclick="openTab('contact');toggleMob()" class="block py-3 font-oswald text-lg uppercase tracking-wider text-gray-300 hover:text-jy cursor-pointer">Contact</span>
     </div>
 </nav>
@@ -125,16 +132,12 @@
         <div class="smoke-y w-48 h-48" style="bottom:15%;left:8%;animation-delay:0s"></div>
         <div class="smoke-g w-40 h-40" style="bottom:10%;right:12%;animation-delay:2s"></div>
         <div class="smoke-y w-32 h-32" style="bottom:25%;left:35%;animation-delay:4s"></div>
-        <!-- Yaz watermark -->
         <div class="yaz-watermark text-white/[.015] font-bold -top-10 right-5 hidden md:block" style="animation:rotateSlow 80s linear infinite">ⵣ</div>
         <div class="yaz-watermark text-jy/[.03] font-bold -bottom-20 -left-10 hidden md:block" style="animation:rotateSlow 100s linear infinite reverse">ⵣ</div>
-
         <div class="relative z-10 text-center max-w-5xl mx-auto">
-            <!-- Tifinagh subtitle -->
             <div class="au flex justify-center mb-4">
                 <span class="tifinagh text-jg/30 text-lg md:text-xl tracking-[.3em]">ⵉⵍⵎⵥⵢⵏ ⵉⵏⴰⴷⴰⵍⵏ ⵏ ⵍⵇⴱⴰⵢⵍ</span>
             </div>
-
             <div class="au d1 flex justify-center mb-8">
                 <div class="emblem" style="animation:glow 3s ease infinite">
                     <div class="text-center">
@@ -143,20 +146,20 @@
                     </div>
                 </div>
             </div>
-
             <h1 class="au d2 font-bebas text-[clamp(3rem,11vw,9rem)] leading-[.88] tracking-wider uppercase mb-3">
                 <span class="text-white">JEUNESSE</span><br><span class="text-white">SPORTIVE DE</span><br><span class="bg-gradient-to-r from-jy via-yellow-300 to-jy bg-clip-text text-transparent glow-y">KABYLIE</span>
             </h1>
             <p class="au d3 font-oswald text-lg md:text-xl text-jg/70 uppercase tracking-[.35em] mb-1">Le Canari Immortel</p>
-            <!-- Amazigh tagline -->
             <p class="au d3 tifinagh text-jy/25 text-sm mb-3 tracking-[.25em]" style="animation:pulseSoft 4s ease infinite">ⵣ ⴰⵢⴳ ⵏ ⵍⵇⴱⴰⵢⵍ ⵓⵔ ⵉⵎⵓⵔⵉⵖ ⵣ</p>
             <p class="au d4 text-sm text-gray-500 max-w-lg mx-auto mb-10 leading-relaxed">7 titres continentaux — Le club algérien le plus titré en Afrique. Une légende née dans les montagnes de Kabylie.</p>
 
-            <div class="au d5 flex flex-col sm:flex-row gap-3 justify-center mb-14">
-                <button onclick="openTab('histoire')" class="group inline-flex items-center justify-center gap-2 bg-jy text-jb font-oswald font-bold uppercase tracking-[.12em] text-sm px-7 py-3.5 rounded-lg hover:bg-yellow-400 transition-all hover:shadow-[0_0_35px_rgba(255,214,0,.25)] cursor-pointer"><span class="iconify text-lg" data-icon="mdi:book-open-page-variant"></span> Histoire <span class="iconify text-lg group-hover:translate-x-1 transition-transform" data-icon="mdi:arrow-right"></span></button>
-                <button onclick="openTab('ultras')" class="group inline-flex items-center justify-center gap-2 border-2 border-jy text-jy font-oswald font-bold uppercase tracking-[.12em] text-sm px-7 py-3.5 rounded-lg hover:bg-jy hover:text-jb transition-all cursor-pointer"><span class="iconify text-lg" data-icon="mdi:account-group"></span> Ultras <span class="iconify text-lg group-hover:translate-x-1 transition-transform" data-icon="mdi:arrow-right"></span></button>
-                <button onclick="openTab('effectif')" class="inline-flex items-center justify-center gap-2 border-2 border-jg text-jg font-oswald font-bold uppercase tracking-[.12em] text-sm px-7 py-3.5 rounded-lg hover:bg-jg hover:text-white transition-all cursor-pointer"><span class="iconify text-lg" data-icon="mdi:tshirt-crew"></span> Effectif</button>
-                <button onclick="openTab('contact')" class="inline-flex items-center justify-center gap-2 border-2 border-white/15 text-gray-400 font-oswald font-bold uppercase tracking-[.12em] text-sm px-7 py-3.5 rounded-lg hover:bg-white/5 hover:text-white transition-all cursor-pointer"><span class="iconify text-lg" data-icon="mdi:message"></span> Contact</button>
+            <!-- 5 BOUTONS -->
+            <div class="au d5 flex flex-col sm:flex-row flex-wrap gap-2.5 justify-center mb-14">
+                <button onclick="openTab('histoire')" class="group inline-flex items-center justify-center gap-2 bg-jy text-jb font-oswald font-bold uppercase tracking-[.12em] text-sm px-6 py-3.5 rounded-lg hover:bg-yellow-400 transition-all hover:shadow-[0_0_35px_rgba(255,214,0,.25)] cursor-pointer"><span class="iconify text-lg" data-icon="mdi:book-open-page-variant"></span> Histoire <span class="iconify text-lg group-hover:translate-x-1 transition-transform" data-icon="mdi:arrow-right"></span></button>
+                <button onclick="openTab('ultras')" class="group inline-flex items-center justify-center gap-2 border-2 border-jy text-jy font-oswald font-bold uppercase tracking-[.12em] text-sm px-6 py-3.5 rounded-lg hover:bg-jy hover:text-jb transition-all cursor-pointer"><span class="iconify text-lg" data-icon="mdi:account-group"></span> Ultras <span class="iconify text-lg group-hover:translate-x-1 transition-transform" data-icon="mdi:arrow-right"></span></button>
+                <button onclick="openTab('effectif')" class="group inline-flex items-center justify-center gap-2 border-2 border-jg text-jg font-oswald font-bold uppercase tracking-[.12em] text-sm px-6 py-3.5 rounded-lg hover:bg-jg hover:text-white transition-all cursor-pointer"><span class="iconify text-lg" data-icon="mdi:tshirt-crew"></span> Effectif</button>
+                <button onclick="openTab('calendrier')" class="group inline-flex items-center justify-center gap-2 border-2 border-white/15 text-gray-400 font-oswald font-bold uppercase tracking-[.12em] text-sm px-6 py-3.5 rounded-lg hover:bg-white/5 hover:text-white transition-all cursor-pointer"><span class="iconify text-lg" data-icon="mdi:calendar-clock"></span> Calendrier</button>
+                <button onclick="openTab('contact')" class="group inline-flex items-center justify-center gap-2 border-2 border-pink-500/25 text-pink-400 font-oswald font-bold uppercase tracking-[.12em] text-sm px-6 py-3.5 rounded-lg hover:bg-pink-500/10 hover:border-pink-500/40 transition-all cursor-pointer"><span class="iconify text-lg" data-icon="mdi:message-text"></span> Contact <span class="iconify text-lg group-hover:translate-x-1 transition-transform" data-icon="mdi:arrow-right"></span></button>
             </div>
 
             <div class="au d6 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto">
@@ -204,10 +207,8 @@
         <div class="smoke-y w-36 h-36" style="bottom:20%;right:20%;animation-delay:3s"></div>
         <div class="smoke-g w-28 h-28" style="top:30%;left:15%;animation-delay:4.5s"></div>
         <div class="smoke-y w-40 h-40" style="bottom:40%;left:50%;animation-delay:6s"></div>
-        <!-- Yaz watermarks -->
         <div class="yaz-watermark text-jy/[.02] -top-5 right-10 hidden md:block" style="animation:rotateSlow 90s linear infinite">ⵣ</div>
         <div class="yaz-watermark text-jg/[.02] bottom-10 left-5 hidden md:block" style="animation:rotateSlow 70s linear infinite reverse">ⵣ</div>
-
         <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-14 au">
                 <div class="inline-flex items-center gap-2 mb-3"><span class="w-8 h-px bg-jy"></span><span class="text-[10px] font-bold text-jg uppercase tracking-[.3em]">La tribune sacrée</span><span class="w-8 h-px bg-jg"></span></div>
@@ -216,7 +217,6 @@
                 <p class="text-gray-500 text-sm max-w-lg mx-auto">Trois groupes, une seule passion. Les ultras font vibrer les tribunes du Stade de Tizi-Ouzou depuis 2009.</p>
                 <div class="font-bebas text-[12rem] md:text-[18rem] leading-none text-white/[.02] uppercase tracking-wider -mt-16 pointer-events-none select-none">ⵣ</div>
             </div>
-
             <div class="mb-10 al">
                 <div class="ultra-big ucard bg-jcard rounded-2xl p-6 md:p-10">
                     <div class="relative z-10 flex flex-col md:flex-row gap-6">
@@ -227,7 +227,7 @@
                         <div>
                             <h3 class="font-bebas text-4xl md:text-5xl uppercase text-white tracking-wider leading-none mb-1">UKB</h3>
                             <p class="text-[12px] text-jy tracking-[.2em] uppercase font-bold mb-5">Ultras Kabylie Boys</p>
-                            <p class="text-gray-400 text-sm leading-[1.85] mb-5">Fondés en <strong class="text-white">2009</strong>, les <strong class="text-jy">Ultras Kabylie Boys</strong> sont le premier groupe ultras de la JSK. Pionniers du mouvement ultras dans les tribunes de Tizi-Ouzou, les UKB ont posé les bases de ce qui allait devenir une véritable culture. Avec leurs tifos spectaculaires, leurs chants puissants et leur organisation rigoureuse, les UKB ont ouvert la voie à une nouvelle génération de supporters kabyles.</p>
+                            <p class="text-gray-400 text-sm leading-[1.85] mb-5">Fondés en <strong class="text-white">2009</strong>, les <strong class="text-jy">Ultras Kabylie Boys</strong> sont le premier groupe ultras de la JSK. Pionniers du mouvement ultras dans les tribunes de Tizi-Ouzou, les UKB ont posé les bases de ce qui allait devenir une véritable culture.</p>
                             <div class="flex flex-wrap gap-2">
                                 <span class="text-[9px] font-bold bg-jy/10 text-jy px-3 py-1.5 rounded-full border border-jy/15 uppercase tracking-wider">Pionniers</span>
                                 <span class="text-[9px] font-bold bg-white/[.03] text-gray-400 px-3 py-1.5 rounded-full border border-white/[.06] uppercase tracking-wider">Tifos</span>
@@ -237,7 +237,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="mb-10 ar">
                 <div class="ultra-big ucard bg-jcard rounded-2xl p-6 md:p-10">
                     <div class="relative z-10 flex flex-col md:flex-row gap-6">
@@ -248,7 +247,7 @@
                         <div>
                             <h3 class="font-bebas text-4xl md:text-5xl uppercase text-white tracking-wider leading-none mb-1">USB</h3>
                             <p class="text-[12px] text-jg tracking-[.2em] uppercase font-bold mb-5">Ultras Samba Boys</p>
-                            <p class="text-gray-400 text-sm leading-[1.85] mb-5">Nés en <strong class="text-white">2011</strong>, les <strong class="text-jg">Ultras Samba Boys</strong> ont apporté une énergie festive et colorée aux tribunes. Inspirés par la samba brésilienne, les USB se distinguent par leurs rythmes entraînants, leurs instruments de percussion et une ambiance chaleureuse qui fait vibrer tout le stade.</p>
+                            <p class="text-gray-400 text-sm leading-[1.85] mb-5">Nés en <strong class="text-white">2011</strong>, les <strong class="text-jg">Ultras Samba Boys</strong> ont apporté une énergie festive et colorée aux tribunes. Inspirés par la samba brésilienne, les USB se distinguent par leurs rythmes entraînants.</p>
                             <div class="flex flex-wrap gap-2">
                                 <span class="text-[9px] font-bold bg-jg/10 text-jg px-3 py-1.5 rounded-full border border-jg/15 uppercase tracking-wider">Festifs</span>
                                 <span class="text-[9px] font-bold bg-white/[.03] text-gray-400 px-3 py-1.5 rounded-full border border-white/[.06] uppercase tracking-wider">Percussion</span>
@@ -258,7 +257,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="mb-12 al">
                 <div class="ultra-big ucard bg-jcard rounded-2xl p-6 md:p-10">
                     <div class="relative z-10 flex flex-col md:flex-row gap-6">
@@ -269,7 +267,7 @@
                         <div>
                             <h3 class="font-bebas text-4xl md:text-5xl uppercase text-white tracking-wider leading-none mb-1">UL</h3>
                             <p class="text-[12px] text-jy tracking-[.2em] uppercase font-bold mb-5">Ultras The Leader</p>
-                            <p class="text-gray-400 text-sm leading-[1.85] mb-5">Créés en <strong class="text-white">2013</strong>, les <strong class="text-jy">Ultras The Leader</strong> incarnent la nouvelle génération du mouvement ultras kabyle. Leur nom dit tout : l'ambition de mener, de guider la tribune vers toujours plus haut. Tifos gigantesques, présence massive dans les déplacements et détermination sans faille.</p>
+                            <p class="text-gray-400 text-sm leading-[1.85] mb-5">Créés en <strong class="text-white">2013</strong>, les <strong class="text-jy">Ultras The Leader</strong> incarnent la nouvelle génération du mouvement ultras kabyle. Tifos gigantesques, présence massive dans les déplacements.</p>
                             <div class="flex flex-wrap gap-2">
                                 <span class="text-[9px] font-bold bg-jy/10 text-jy px-3 py-1.5 rounded-full border border-jy/15 uppercase tracking-wider">Leaders</span>
                                 <span class="text-[9px] font-bold bg-white/[.03] text-gray-400 px-3 py-1.5 rounded-full border border-white/[.06] uppercase tracking-wider">Tifos Géants</span>
@@ -279,7 +277,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="au flex items-center justify-center gap-0 max-w-md mx-auto mb-16">
                 <div class="flex flex-col items-center"><div class="w-14 h-14 rounded-full bg-jy flex items-center justify-center font-bebas text-xl text-jb shadow-[0_0_20px_rgba(255,214,0,.3)]">09</div><div class="text-[10px] text-jy font-bold mt-2 uppercase tracking-wider">UKB</div></div>
                 <div class="flex-1 h-0.5 bg-gradient-to-r from-jy to-jg mx-3"></div>
@@ -287,10 +284,8 @@
                 <div class="flex-1 h-0.5 bg-gradient-to-r from-jg to-jy mx-3"></div>
                 <div class="flex flex-col items-center"><div class="w-14 h-14 rounded-full bg-gradient-to-br from-jy to-jg flex items-center justify-center font-bebas text-xl text-jb shadow-[0_0_20px_rgba(255,214,0,.25)]">13</div><div class="text-[10px] text-jy font-bold mt-2 uppercase tracking-wider">UL</div></div>
             </div>
-
-            <!-- Amazigh quote -->
             <div class="au d2 bg-gradient-to-r from-jgd/20 via-jg/10 to-jgd/20 border border-jg/15 rounded-2xl p-6 md:p-8 text-center relative overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-br from-jy/[.03] to-transparent pointer-events-none"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-jy/[.03] to-transparent pointer-events:none"></div>
                 <div class="absolute top-3 left-4 tifinagh text-jy/10 text-3xl">ⵣ</div>
                 <div class="absolute bottom-3 right-4 tifinagh text-jg/10 text-3xl">ⵣ</div>
                 <div class="relative z-10">
@@ -312,61 +307,153 @@
                 <div class="inline-flex items-center gap-2 mb-3"><span class="w-8 h-px bg-jg"></span><span class="text-[10px] font-bold text-jy uppercase tracking-[.3em]">Saison 2024-2025</span><span class="w-8 h-px bg-jy"></span></div>
                 <p class="tifinagh text-jy/20 text-sm mb-3 tracking-[.3em]">ⵜⴰⵎⵎⴰⵜ</p>
                 <h2 class="font-bebas text-5xl md:text-6xl lg:text-7xl uppercase text-white leading-none">L'<span class="text-jy">Effectif</span></h2>
-                <p class="text-gray-600 text-xs mt-3">35 joueurs — Gardiens · Défenseurs · Milieux · Attaquants</p>
+                <p class="text-gray-600 text-xs mt-3">28 joueurs + 3 staff — Gardiens · Défenseurs · Milieux · Attaquants</p>
             </div>
             <div class="mb-10 au">
-                <div class="flex items-center gap-3 mb-4"><div class="w-7 h-7 rounded-lg bg-jy/10 flex items-center justify-center"><span class="iconify text-jy" data-icon="mdi:hand-back-right"></span></div><h3 class="font-oswald font-bold text-xs uppercase tracking-[.15em] text-jy">Gardiens</h3><div class="flex-1 h-px bg-white/[.04]"></div><span class="text-[10px] text-gray-600 font-medium">4 joueurs</span></div>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">14</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">A. Ramdane</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">24 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center"><span class="iconify text-jy/30 text-lg" data-icon="mdi:numeric-0-box"></span></div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">M.I. Hadid</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">24 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">16</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">G. Merbah</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">31 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">22</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">S. Benrabah</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">23 ans</span></p></div>
+                <div class="flex items-center gap-3 mb-4"><div class="w-7 h-7 rounded-lg bg-jy/10 flex items-center justify-center"><span class="iconify text-jy" data-icon="mdi:hand-back-right"></span></div><h3 class="font-oswald font-bold text-xs uppercase tracking-[.15em] text-jy">Gardiens de but</h3><div class="flex-1 h-px bg-white/[.04]"></div><span class="text-[10px] text-gray-600 font-medium">3 joueurs</span></div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">16</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Gaya Merbah</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">32 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">21</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Mohamed Idir Hadid</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">24 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">22</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Seif Benrabah</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">23 ans</span></p></div>
                 </div>
             </div>
             <div class="mb-10 au d1">
-                <div class="flex items-center gap-3 mb-4"><div class="w-7 h-7 rounded-lg bg-jg/10 flex items-center justify-center"><span class="iconify text-jg" data-icon="mdi:shield-half-full"></span></div><h3 class="font-oswald font-bold text-xs uppercase tracking-[.15em] text-jg">Défenseurs</h3><div class="flex-1 h-px bg-white/[.04]"></div><span class="text-[10px] text-gray-600 font-medium">12 joueurs</span></div>
+                <div class="flex items-center gap-3 mb-4"><div class="w-7 h-7 rounded-lg bg-jg/10 flex items-center justify-center"><span class="iconify text-jg" data-icon="mdi:shield-half-full"></span></div><h3 class="font-oswald font-bold text-xs uppercase tracking-[.15em] text-jg">Défenseurs</h3><div class="flex-1 h-px bg-white/[.04]"></div><span class="text-[10px] text-gray-600 font-medium">11 joueurs</span></div>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5">
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center"><span class="iconify text-jg/30 text-lg" data-icon="mdi:numeric-0-box"></span></div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">I. Mokadem</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">31 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center"><span class="iconify text-jg/30 text-lg" data-icon="mdi:numeric-0-box"></span></div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">I.F. Haddouche</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">27 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center"><span class="iconify text-jg/30 text-lg" data-icon="mdi:numeric-0-box"></span></div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">F.N. Djabri</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">24 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">3</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">L.C. Bellaouel</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">25 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">4</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">M.R. Bott</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">21 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">5</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Z. Belaïd</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">27 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">13</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">O. Benattia</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">20 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">14</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">A. Cherir</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">20 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">20</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">M.A. Madani</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">33 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">26</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">A. Mammeri</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">28 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">28</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">R. Benchaa</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-fra">FRA</span><span class="text-[9px] text-gray-600">24 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">37</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">F.N. Djabri</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">24 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">2</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Fares Nechat</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">25 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">3</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Laid Chahine Bellaouel</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">26 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">4</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">M. Rezkallah Bott</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">22 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">5</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Zineddine Belaïd</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">27 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">13</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Oussama Benattia</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">20 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">14</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Abdelhak Cherir</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">20 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">17</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Mohamed Reda Hamidi</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">25 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">20</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Mohamed Amine Madani</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">33 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">24</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Chouaib Boulkaboul</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">24 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">26</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Ahmed Mammeri</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">27 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jg/5 border border-jg/10 flex items-center justify-center font-bebas text-lg text-jg">28</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">R. M. A. Benchaa</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-fra">FRA</span><span class="text-[9px] text-gray-600">24 ans</span></p></div>
                 </div>
             </div>
             <div class="mb-10 au d2">
-                <div class="flex items-center gap-3 mb-4"><div class="w-7 h-7 rounded-lg bg-gradient-to-br from-jy/10 to-jg/10 flex items-center justify-center"><span class="iconify text-white" data-icon="mdi:soccer-field"></span></div><h3 class="font-oswald font-bold text-xs uppercase tracking-[.15em] text-white">Milieux</h3><div class="flex-1 h-px bg-white/[.04]"></div><span class="text-[10px] text-gray-600 font-medium">10 joueurs</span></div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-white/[.03] border border-white/[.05] flex items-center justify-center"><span class="iconify text-white/20 text-lg" data-icon="mdi:numeric-0-box"></span></div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">K. Nasri</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-fra">FRA</span><span class="text-[9px] text-gray-600">23 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-white/[.03] border border-white/[.05] flex items-center justify-center"><span class="iconify text-white/20 text-lg" data-icon="mdi:numeric-0-box"></span></div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">H. Arfi</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">24 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-white/[.03] border border-white/[.05] flex items-center justify-center font-bebas text-lg text-white">7</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">J. L. Teixeira</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-ago">AGO</span><span class="text-[9px] text-gray-600">27 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">10</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">R. Boudebouz</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-fra">FRA</span><span class="text-[9px] text-gray-600">36 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-white/[.03] border border-white/[.05] flex items-center justify-center font-bebas text-lg text-white">12</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">A. Bada</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-civ">CIV</span><span class="text-[9px] text-gray-600">23 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-white/[.03] border border-white/[.05] flex items-center justify-center font-bebas text-lg text-white">15</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Y. Izem</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">19 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-white/[.03] border border-white/[.05] flex items-center justify-center font-bebas text-lg text-white">17</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">M.R. Hamidi</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">24 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-white/[.03] border border-white/[.05] flex items-center justify-center font-bebas text-lg text-white">23</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">H. Mouali</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">28 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-white/[.03] border border-white/[.05] flex items-center justify-center font-bebas text-lg text-white">24</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">C. Boulkaboul</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">25 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-white/[.03] border border-white/[.05] flex items-center justify-center font-bebas text-lg text-white">25</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">B. Sarr</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-gin">GIN</span><span class="text-[9px] text-gray-600">28 ans</span></p></div>
+                <div class="flex items-center gap-3 mb-4"><div class="w-7 h-7 rounded-lg bg-gradient-to-br from-jy/10 to-jg/10 flex items-center justify-center"><span class="iconify text-white" data-icon="mdi:soccer-field"></span></div><h3 class="font-oswald font-bold text-xs uppercase tracking-[.15em] text-white">Milieux de terrain</h3><div class="flex-1 h-px bg-white/[.04]"></div><span class="text-[10px] text-gray-600 font-medium">4 joueurs</span></div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">10</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Ryad Boudebouz</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">36 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-white/[.03] border border-white/[.05] flex items-center justify-center font-bebas text-lg text-white">12</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Josaphat Arthur Bada</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-civ">CIV</span><span class="text-[9px] text-gray-600">24 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-white/[.03] border border-white/[.05] flex items-center justify-center font-bebas text-lg text-white">15</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Youcef Izem</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">19 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-white/[.03] border border-white/[.05] flex items-center justify-center font-bebas text-lg text-white">25</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Babacar Sarr</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-sen">SEN</span><span class="text-[9px] text-gray-600">29 ans</span></p></div>
                 </div>
             </div>
-            <div class="au d3">
-                <div class="flex items-center gap-3 mb-4"><div class="w-7 h-7 rounded-lg bg-jy/10 flex items-center justify-center"><span class="iconify text-jy" data-icon="mdi:target"></span></div><h3 class="font-oswald font-bold text-xs uppercase tracking-[.15em] text-jy">Attaquants</h3><div class="flex-1 h-px bg-white/[.04]"></div><span class="text-[10px] text-gray-600 font-medium">9 joueurs</span></div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center"><span class="iconify text-jy/30 text-lg" data-icon="mdi:numeric-0-box"></span></div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">M.Y. Cherifi</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">25 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center"><span class="iconify text-jy/30 text-lg" data-icon="mdi:numeric-0-box"></span></div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">D.E. Mouaki</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">29 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">7</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">A.A. Lahmeri</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">29 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">9</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">B. Messaoudi</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">28 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">11</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">L. Akhrib</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">21 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">18</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">A. Mahious</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">28 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">27</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">O. Malki</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">21 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">29</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">C. Ecua</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-civ">CIV</span><span class="text-[9px] text-gray-600">24 ans</span></p></div>
-                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">30</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">I. Tichtich</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">19 ans</span></p></div>
+            <div class="mb-10 au d3">
+                <div class="flex items-center gap-3 mb-4"><div class="w-7 h-7 rounded-lg bg-jy/10 flex items-center justify-center"><span class="iconify text-jy" data-icon="mdi:target"></span></div><h3 class="font-oswald font-bold text-xs uppercase tracking-[.15em] text-jy">Attaquants</h3><div class="flex-1 h-px bg-white/[.04]"></div><span class="text-[10px] text-gray-600 font-medium">7 joueurs</span></div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2.5">
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">7</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">J. Lopes Teixeira</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-ago">AGO</span><span class="text-[9px] text-gray-600">27 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">9</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Billal Messaoudi</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">29 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">11</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Lahlou Akhrib</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">20 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">18</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Aimen Mahious</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">29 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">27</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Oualid Malki</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">22 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">29</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">Celestin Ecua</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-tcd">TCD</span><span class="text-[9px] text-gray-600">24 ans</span></p></div>
+                    <div class="pcard bg-jcard rounded-xl p-3 text-center"><div class="w-11 h-11 mx-auto mb-1.5 rounded-full bg-jy/5 border border-jy/10 flex items-center justify-center font-bebas text-lg text-jy">30</div><p class="font-oswald font-semibold text-[11px] text-white leading-tight">I.E. Slimane Tichtich</p><p class="flex items-center justify-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">20 ans</span></p></div>
+                </div>
+            </div>
+            <div class="au d4">
+                <div class="flex items-center gap-3 mb-4"><div class="w-7 h-7 rounded-lg bg-white/[.05] flex items-center justify-center"><span class="iconify text-gray-400" data-icon="mdi:whistle"></span></div><h3 class="font-oswald font-bold text-xs uppercase tracking-[.15em] text-gray-400">Staff Technique</h3><div class="flex-1 h-px bg-white/[.04]"></div><span class="text-[10px] text-gray-600 font-medium">3 membres</span></div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl">
+                    <div class="pcard bg-jcard rounded-xl p-4 flex items-center gap-4">
+                        <div class="w-12 h-12 shrink-0 rounded-xl bg-gradient-to-br from-jy/10 to-jg/10 border border-jy/10 flex items-center justify-center"><span class="iconify text-xl text-jy" data-icon="mdi:account-tie"></span></div>
+                        <div><p class="font-oswald font-semibold text-xs text-white leading-tight">Karim Chemoun</p><p class="text-[9px] text-gray-600 mt-0.5">Préparateur physique</p><div class="flex items-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">28 ans</span></div></div>
+                    </div>
+                    <div class="pcard bg-jcard rounded-xl p-4 flex items-center gap-4">
+                        <div class="w-12 h-12 shrink-0 rounded-xl bg-gradient-to-br from-jy/10 to-jg/10 border border-jg/10 flex items-center justify-center"><span class="iconify text-xl text-jg" data-icon="mdi:account-star"></span></div>
+                        <div><p class="font-oswald font-semibold text-xs text-white leading-tight">Redha Ghitli</p><p class="text-[9px] text-gray-600 mt-0.5">Entraîneur adjoint</p><div class="flex items-center gap-1.5 mt-1"><span class="flag flag-dza">DZA</span><span class="text-[9px] text-gray-600">45 ans</span></div></div>
+                    </div>
+                    <div class="pcard bg-jcard rounded-xl p-4 flex items-center gap-4">
+                        <div class="w-12 h-12 shrink-0 rounded-xl bg-gradient-to-br from-jy/10 to-jg/10 border border-white/[.08] flex items-center justify-center"><span class="iconify text-xl text-gray-300" data-icon="mdi:clipboard-pulse"></span></div>
+                        <div><p class="font-oswald font-semibold text-xs text-white leading-tight">Marc Chervaz</p><p class="text-[9px] text-gray-600 mt-0.5">Kinésithérapeute</p><div class="flex items-center gap-1.5 mt-1"><span class="flag flag-che">CHE</span><span class="text-[9px] text-gray-600">43 ans</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CALENDRIER ==================== -->
+<section id="tab-calendrier" class="tab-section">
+    <div class="py-16 md:py-24 min-h-[calc(100vh-88px)]" style="background:radial-gradient(ellipse at 30% 20%,rgba(255,214,0,.06) 0%,transparent 40%),radial-gradient(ellipse at 70% 80%,rgba(0,166,81,.06) 0%,transparent 40%),radial-gradient(ellipse at 50% 50%,rgba(255,214,0,.02) 0%,transparent 50%),#0B0B0B">
+        <div class="yaz-watermark text-jy/[.02] -top-10 left-10 hidden md:block" style="animation:rotateSlow 100s linear infinite">ⵣ</div>
+        <div class="yaz-watermark text-jg/[.02] -bottom-10 right-10 hidden md:block" style="animation:rotateSlow 80s linear infinite reverse">ⵣ</div>
+        <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 au">
+                <div class="inline-flex items-center gap-2 mb-3"><span class="w-8 h-px bg-jy"></span><span class="text-[10px] font-bold text-jg uppercase tracking-[.3em]">Prochains matchs</span><span class="w-8 h-px bg-jy"></span></div>
+                <p class="tifinagh text-jy/20 text-sm mb-3 tracking-[.3em]">ⵓⵔⴰⵔ ⵏ ⵜⵓⵔⵉⵏ</p>
+                <h2 class="font-bebas text-5xl md:text-6xl lg:text-7xl uppercase text-white leading-none">Calen<span class="text-jy">drier</span></h2>
+                <p class="text-gray-600 text-xs mt-3">Ligue 1 — Saison 2025-2026</p>
+            </div>
+            <div class="au d1 flex items-center justify-center gap-4 mb-8">
+                <div class="h-px flex-1 bg-gradient-to-r from-transparent to-white/[.06]"></div>
+                <div class="flex items-center gap-2 bg-white/[.03] border border-white/[.06] rounded-full px-5 py-2">
+                    <span class="iconify text-jy text-sm" data-icon="mdi:calendar-month"></span>
+                    <span class="font-oswald font-bold text-[11px] text-white uppercase tracking-[.15em]">Mai 2026</span>
+                </div>
+                <div class="h-px flex-1 bg-gradient-to-l from-transparent to-white/[.06]"></div>
+            </div>
+            <div class="au d2 mb-6">
+                <div class="match-card away-match bg-jcard rounded-2xl overflow-hidden">
+                    <div class="flex items-center justify-between px-5 py-2.5 border-b border-white/[.04]" style="background:linear-gradient(90deg,rgba(0,166,81,.06),transparent)">
+                        <div class="flex items-center gap-2"><span class="inline-flex items-center gap-1 text-[9px] font-bold bg-jg/10 text-jg px-2.5 py-0.5 rounded-full uppercase tracking-wider"><span class="iconify text-xs" data-icon="mdi:airplane-takeoff"></span> Extérieur</span><span class="text-[9px] text-gray-600 font-medium">Journée 34</span></div>
+                        <span class="text-[9px] text-gray-600 font-medium flex items-center gap-1"><span class="iconify text-xs" data-icon="mdi:clock-outline"></span> 15:00</span>
+                    </div>
+                    <div class="p-6 md:p-8">
+                        <div class="flex items-center gap-4 md:gap-6">
+                            <div class="shrink-0 text-center"><div class="bg-white/[.03] border border-white/[.06] rounded-xl px-4 py-3 min-w-[72px]"><div class="font-bebas text-3xl text-white leading-none">15</div><div class="text-[9px] text-jy font-bold uppercase tracking-wider mt-0.5">MAI</div><div class="text-[8px] text-gray-600 mt-0.5">2026</div></div></div>
+                            <div class="flex-1 flex items-center justify-between gap-3">
+                                <div class="text-right flex-1 min-w-0"><p class="font-oswald font-bold text-sm md:text-base text-gray-300 truncate">ASO Chlef</p><p class="text-[9px] text-gray-600 mt-0.5 truncate">ASO de Chlef</p></div>
+                                <div class="shrink-0 flex flex-col items-center gap-1.5 px-2"><div class="vs-badge w-11 h-11 rounded-full bg-gradient-to-br from-jy/15 to-jg/15 border border-jy/15 flex items-center justify-center"><span class="font-bebas text-sm text-white tracking-wider">VS</span></div></div>
+                                <div class="text-left flex-1 min-w-0"><p class="font-oswald font-bold text-sm md:text-base text-jy truncate">JS Kabylie</p><p class="text-[9px] text-gray-600 mt-0.5 truncate">Jeunesse Sportive de Kabylie</p></div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap items-center justify-between gap-3 mt-5 pt-4 border-t border-white/[.04]">
+                            <div class="flex items-center gap-1.5 text-gray-600"><span class="iconify text-xs" data-icon="mdi:stadium-variant"></span><span class="text-[10px]">Stade Mohamed Boumezrag — Chlef</span></div>
+                            <span class="inline-flex items-center gap-1.5 text-[9px] font-bold bg-gray-500/10 text-gray-400 px-3 py-1 rounded-full border border-gray-500/10 uppercase tracking-wider"><span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span> Non commencé</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-center my-2 mb-6"><div class="w-px h-8 bg-gradient-to-b from-white/[.06] to-white/[.02]"></div></div>
+            <div class="au d3 mb-14">
+                <div class="match-card home-match bg-jcard rounded-2xl overflow-hidden relative">
+                    <div class="absolute top-0 left-0 right-0 h-32 pointer-events-none" style="background:radial-gradient(ellipse at 50% 0%,rgba(255,214,0,.06),transparent)"></div>
+                    <div class="relative flex items-center justify-between px-5 py-2.5 border-b border-jy/[.06]" style="background:linear-gradient(90deg,rgba(255,214,0,.08),transparent)">
+                        <div class="flex items-center gap-2"><span class="inline-flex items-center gap-1 text-[9px] font-bold bg-jy/10 text-jy px-2.5 py-0.5 rounded-full uppercase tracking-wider"><span class="iconify text-xs" data-icon="mdi:home-variant"></span> Domicile</span><span class="text-[9px] text-gray-600 font-medium">Journée 35</span></div>
+                        <span class="text-[9px] text-gray-600 font-medium flex items-center gap-1"><span class="iconify text-xs" data-icon="mdi:clock-outline"></span> 15:00</span>
+                    </div>
+                    <div class="relative p-6 md:p-8">
+                        <div class="flex items-center gap-4 md:gap-6">
+                            <div class="shrink-0 text-center"><div class="bg-gradient-to-br from-jy/10 to-jg/10 border border-jy/15 rounded-xl px-4 py-3 min-w-[72px]" style="animation:glow 4s ease infinite"><div class="font-bebas text-3xl text-jy leading-none">22</div><div class="text-[9px] text-jy font-bold uppercase tracking-wider mt-0.5">MAI</div><div class="text-[8px] text-gray-500 mt-0.5">2026</div></div></div>
+                            <div class="flex-1 flex items-center justify-between gap-3">
+                                <div class="text-right flex-1 min-w-0"><p class="font-oswald font-bold text-sm md:text-base text-jy truncate">JS Kabylie</p><p class="text-[9px] text-gray-600 mt-0.5 truncate">Jeunesse Sportive de Kabylie</p></div>
+                                <div class="shrink-0 flex flex-col items-center gap-1.5 px-2"><div class="vs-badge w-12 h-12 rounded-full bg-gradient-to-br from-jy/20 to-jg/20 border border-jy/20 flex items-center justify-center" style="box-shadow:0 0 20px rgba(255,214,0,.15)"><span class="font-bebas text-base text-white tracking-wider">VS</span></div></div>
+                                <div class="text-left flex-1 min-w-0"><p class="font-oswald font-bold text-sm md:text-base text-gray-300 truncate">CR Belouizdad</p><p class="text-[9px] text-gray-600 mt-0.5 truncate">Chabab Riadhi de Belouizdad</p></div>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap items-center justify-between gap-3 mt-5 pt-4 border-t border-jy/[.06]">
+                            <div class="flex items-center gap-1.5 text-gray-600"><span class="iconify text-xs text-jy/50" data-icon="mdi:stadium-variant"></span><span class="text-[10px]">Stade Hocine Aït Ahmed — Tizi Ouzou</span></div>
+                            <span class="inline-flex items-center gap-1.5 text-[9px] font-bold bg-gray-500/10 text-gray-400 px-3 py-1 rounded-full border border-gray-500/10 uppercase tracking-wider"><span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span> Non commencé</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="au d4 grid grid-cols-3 gap-3 mb-14 max-w-md mx-auto">
+                <div class="bg-jcard border border-jborder rounded-xl p-4 text-center"><span class="iconify text-jg text-lg mx-auto" data-icon="mdi:airplane-takeoff"></span><div class="font-bebas text-2xl text-white mt-1">1</div><div class="text-[8px] text-gray-600 uppercase tracking-wider">À l'extérieur</div></div>
+                <div class="bg-jcard border border-jborder rounded-xl p-4 text-center"><span class="iconify text-jy text-lg mx-auto" data-icon="mdi:home-variant"></span><div class="font-bebas text-2xl text-white mt-1">1</div><div class="text-[8px] text-gray-600 uppercase tracking-wider">À domicile</div></div>
+                <div class="bg-jcard border border-jborder rounded-xl p-4 text-center"><span class="iconify text-gray-400 text-lg mx-auto" data-icon="mdi:calendar-blank-multiple"></span><div class="font-bebas text-2xl text-white mt-1">2</div><div class="text-[8px] text-gray-600 uppercase tracking-wider">Matchs restants</div></div>
+            </div>
+            <div class="au d5 bg-gradient-to-r from-jgd/15 via-jg/5 to-jgd/15 border border-jg/10 rounded-2xl p-6 md:p-8 text-center relative overflow-hidden">
+                <div class="absolute top-3 left-4 tifinagh text-jy/10 text-2xl">ⵣ</div>
+                <div class="absolute bottom-3 right-4 tifinagh text-jg/10 text-2xl">ⵣ</div>
+                <div class="relative z-10">
+                    <span class="iconify text-2xl text-jy/20 mb-1 inline-block" data-icon="mdi:calendar-star"></span>
+                    <p class="text-sm text-gray-300 italic leading-relaxed max-w-lg mx-auto mb-1">Chaque match est une bataille. Chaque victoire est une fierté. Le stade de Tizi-Ouzou tremble pour le Canari.</p>
+                    <p class="tifinagh text-jy/25 text-xs tracking-[.3em] mb-1">ⴷⴰⵖ ⵓⵔ ⵉⵜⵜⵡⴰⵍⵉ ⵓⵔⴰⵔ</p>
+                    <p class="text-[10px] text-jy/60 uppercase tracking-[.15em]">— Tizi Ouzou, le 16e joueur</p>
                 </div>
             </div>
         </div>
@@ -409,8 +496,8 @@
 <!-- FOOTER -->
 <footer class="border-t border-white/[.03] pt-8 pb-5" style="background:linear-gradient(180deg,rgba(255,214,0,.03),#0B0B0B)">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-4 gap-6 mb-6">
-            <div>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-6 mb-6">
+            <div class="col-span-2 md:col-span-1">
                 <div class="flex items-center gap-3 mb-2"><div class="w-8 h-8 rounded-full bg-gradient-to-br from-jy to-jg flex items-center justify-center font-bebas text-jb text-sm tracking-wider">JK</div><div><div class="font-oswald font-bold text-sm text-white leading-none">JS KABYLIE</div><div class="text-[7px] tracking-[.2em] text-jy uppercase font-medium">Le Canari Immortel</div></div></div>
                 <p class="text-[10px] text-gray-600 leading-relaxed max-w-xs">7 coupes d'Afrique, parmi les 10 meilleurs clubs africains du XXe siècle.</p>
             </div>
@@ -421,6 +508,7 @@
                     <li><span onclick="openTab('histoire')" class="text-[11px] text-gray-600 hover:text-jy transition-colors cursor-pointer">Histoire</span></li>
                     <li><span onclick="openTab('ultras')" class="text-[11px] text-gray-600 hover:text-jy transition-colors cursor-pointer">Ultras</span></li>
                     <li><span onclick="openTab('effectif')" class="text-[11px] text-gray-600 hover:text-jy transition-colors cursor-pointer">Effectif</span></li>
+                    <li><span onclick="openTab('calendrier')" class="text-[11px] text-gray-600 hover:text-jy transition-colors cursor-pointer">Calendrier</span></li>
                     <li><span onclick="openTab('contact')" class="text-[11px] text-gray-600 hover:text-jy transition-colors cursor-pointer">Contact</span></li>
                 </ul>
             </div>
@@ -439,6 +527,13 @@
                     <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-jy shrink-0"></span><span class="text-[11px] text-gray-600"><strong class="text-gray-400">UKB</strong> — 2009</span></li>
                     <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-jg shrink-0"></span><span class="text-[11px] text-gray-600"><strong class="text-gray-400">USB</strong> — 2011</span></li>
                     <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-jy to-jg shrink-0"></span><span class="text-[11px] text-gray-600"><strong class="text-gray-400">UL</strong> — 2013</span></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-oswald font-bold text-[10px] text-white uppercase tracking-[.2em] mb-2">Prochains matchs</h4>
+                <ul class="space-y-2">
+                    <li class="text-[10px] text-gray-600"><span class="text-gray-400 font-medium">15 Mai</span> — vs ASO Chlef</li>
+                    <li class="text-[10px] text-gray-600"><span class="text-jy font-medium">22 Mai</span> — vs CR Belouizdad</li>
                 </ul>
             </div>
         </div>
